@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: consul
+    meta.helm.sh/release-namespace: consul
+  creationTimestamp: "2023-06-16T12:44:41Z"
+  labels:
+    app: consul
+    app.kubernetes.io/managed-by: Helm
+    chart: consul-helm
+    component: dns
+    heritage: Helm
+    release: consul
+  name: consul-consul-dns
+  namespace: consul
+  resourceVersion: "2767"
+  uid: 454ee10b-dbb3-4c65-a6a8-62aebd5486d7
+spec:
+  clusterIP: 172.20.105.187
+  clusterIPs:
+  - 172.20.105.187
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: dns-tcp
+    port: 53
+    protocol: TCP
+    targetPort: dns-tcp
+  - name: dns-udp
+    port: 53
+    protocol: UDP
+    targetPort: dns-udp
+  selector:
+    app: consul
+    hasDNS: "true"
+    release: consul
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+
+# Install AWS CLI
+sudo apt-get update -y
+sudo apt-get install -y awscli
+
+# Retrieve the ALB DNS name output from Terraform
+alb_dns_name=$(terraform output alb_dns_name)
+
+# Install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Configure Nginx as a reverse proxy for Jenkins
+sudo tee /etc/nginx/sites-available/default <<EOF
+server {
+    listen 80;
+    server_name $alb_dns_name;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+EOF
+
+# Test Nginx configuration
+sudo nginx -t
+
+# Restart Nginx to apply the new configuration
+sudo systemctl restart nginx
+
+# Install Jenkins
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install -y jenkins
+
+# Start Jenkins and enable it to start at boot time
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+
+# Adds all the hosts, disables host key checking
+echo "Host *" >> /etc/ssh/ssh_config
+echo "  StrictHostKeyChecking no" >> /etc/ssh/ssh_config
+echo "  IdentityFile ~/.ssh/opsschool-project.pem" >> /etc/ssh/ssh_config
+
+
+# Create the .ssh directory
+file="opsschool-project.pem"
+
+mkdir -p "/home/${user}/.ssh"
+touch "/home/${user}/.ssh/${file}"
+chmod 0400 "/home/${user}/.ssh/${file}"
+chown "${user}:${user}" "/home/${user}/.ssh/${file}"
+
+
+
+
+#wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+#sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+#sudo apt update && sudo apt upgrade -y
+#sudo apt install default-jre -y
+#sudo apt install jenkins -y
+#sudo systemctl enable jenkins
+#sudo systemctl start jenkins
+#sudo cat /var/lib/jenkins/secrets/initialAdminPassword

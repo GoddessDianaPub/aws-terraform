@@ -1,0 +1,47 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteFargateProfile",
+                "eks:UpdateClusterVersion",
+                "eks:DescribeFargateProfile",
+                "eks:ListTagsForResource",
+                "eks:UpdateAddon",
+                "eks:ListAddons",
+                "eks:UpdateClusterConfig",
+                "eks:DescribeAddon",
+                "eks:UpdateNodegroupVersion",
+                "eks:DescribeNodegroup",
+                "eks:AssociateEncryptionConfig",
+                "eks:ListUpdates",
+                "eks:DescribeAddonVersions",
+                "eks:ListIdentityProviderConfigs",
+                "eks:ListNodegroups",
+                "eks:DisassociateIdentityProviderConfig",
+                "eks:DescribeAddonConfiguration",
+                "eks:CreateNodegroup",
+                "eks:CreateFargateProfile",
+                "eks:ListFargateProfiles",
+                "eks:DescribeIdentityProviderConfig",
+                "eks:DeleteAddon",
+                "eks:DescribeUpdate",
+                "eks:AccessKubernetesApi",
+                "eks:CreateAddon",
+                "eks:UpdateNodegroupConfig",
+                "eks:DescribeCluster",
+                "eks:ListClusters",
+                "eks:AssociateIdentityProviderConfig"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": "eks:*",
+            "Resource": "arn:aws:eks:us-east-1:735911875499:cluster/opsschool-eks-MaTdsqZh"
+        }
+    ]
+}

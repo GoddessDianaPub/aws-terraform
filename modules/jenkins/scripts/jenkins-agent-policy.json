@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": "ec2:DescribeInstances",
+          "Resource": "*"
+      },
+      {
+          "Effect": "Allow",
+          "Action": "eks:*",
+          "Resource": "arn:aws:eks:us-east-1:735911875499:cluster/opsschool-eks-vmyXKKbl"
+      }
+  ]
+}

@@ -1,0 +1,31 @@
+plugin: amazon.aws.aws_ec2
+aws_profile: default
+regions:
+  - us-east-1
+
+keyed_groups:
+  - key: tags.Name
+
+filters:
+
+  tag:OSType:
+    - ubuntu
+    - amazon
+    - redhat
+    - centos
+    - fedora
+    - debian
+
+  tag:Logging:
+    - filebeat
+
+# Define host groups
+groups:
+  ubuntu: "'ubuntu' in tags.OSType"
+  redhat: "'redhat' in tags.OSType"
+  amazon: "'amazon' in tags.OSType"
+  fedora: "'fedora' in tags.OSType"
+  centos: "'centos' in tags.OSType"
+  debian: "'debian' in tags.OSType"
+
+aws_iam_role: arn:aws:iam::735911875499:role/EC2_permissions_for_ansible_server

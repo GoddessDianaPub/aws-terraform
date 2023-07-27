@@ -1,0 +1,238 @@
+---
+
+- hosts: all
+  become: true
+  vars:
+    consul_version: "1.14.0"
+
+  tasks:
+    - name: Add universe repository for Ubuntu OS
+      apt_repository:
+        repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
+        state: present
+        update_cache: yes
+      when: "ansible_distribution == 'Ubuntu'"
+
+    - name: Add universe repository for Debian OS
+      apt_repository:
+        repo: 'deb http://deb.debian.org/debian {{ ansible_distribution_release }} main contrib non-free'
+        state: present
+        update_cache: yes
+      when: "ansible_distribution == 'Debian'"
+
+    - name: Install dependencies on Debian-based systems
+      apt:
+        name:
+          - net-tools
+          - unzip
+          - python3-pip
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install dependencies on Red Hat-based systems
+      yum:
+        name:
+          - net-tools
+          - unzip
+          - python3-pip
+        state: present
+      when: "ansible_os_family == 'RedHat'"
+
+    - name: Check if pip is installed
+      command: pip --version
+      register: pip_check
+      failed_when: false
+      changed_when: false
+
+    - name: Check if Python is installed
+      command: python3 --version
+      register: python_check
+      failed_when: false
+      changed_when: false
+      ignore_errors: true
+
+    - name: Install pip if not already installed
+      raw: "curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && python3 /tmp/get-pip.py"
+      args:
+        creates: /usr/local/bin/pip
+      when: pip_check.rc != 0 and ansible_distribution_major_version|int < 3
+      ignore_errors: true
+
+    - name: Install or upgrade boto3 and botocore
+      pip:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - boto3
+        - botocore
+
+    - name: Install systemd-resolved on Red Hat-based systems
+      yum:
+        name:
+          - systemd-resolved
+        state: present
+      when: "ansible_os_family == 'RedHat'"
+
+    - name: Configure systemd-resolved
+      copy:
+        dest: "/etc/systemd/resolved.conf"
+        content: |
+          [Resolve]
+          DNS=127.0.0.1:8600
+          Domains=~consul
+
+    - name: Restart systemd-resolved service
+      service:
+        name: systemd-resolved
+        state: restarted
+
+    - name: Fetch Consul
+      get_url:
+        url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
+        dest: "/tmp/consul.zip"
+
+    - name: Install Consul
+      shell: unzip -o /tmp/consul.zip -d /usr/local/bin
+      args:
+        creates: /usr/local/bin/consul
+
+    - name: Set mode for Consul files
+      file:
+        path: /usr/local/bin/consul
+        mode: "0755"
+
+    - name: add group consul
+      ansible.builtin.group:
+        name: consul
+        state: present
+
+    - name: add consul user
+      ansible.builtin.user:
+        name: consul
+        group: consul
+
+    - name: Create Consul user and directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: consul
+        group: consul
+      loop:
+        - "/opt/consul"
+        - "/etc/consul.d"
+        - "/run/consul"
+
+
+    - name: Gather EC2 instance metadata
+      ec2_metadata_facts:
+      register: instance_meta
+
+    - name: Gather EC2 instance information
+      ec2_instance_info:
+        instance_ids:
+          - "{{ instance_meta.ansible_facts.ansible_ec2_instance_id }}"
+        region: "{{ instance_meta.ansible_facts.ansible_ec2_placement_region }}"
+      register: instance_info
+
+    - name: Gather and Save Instance Info
+      set_fact:
+          Name: "{{ instance_info.instances | map(attribute='tags.Name') | list | join('\n') }}"
+
+    - name: Configure Consul
+      copy:
+        dest: "/etc/consul.d/config.json"
+        content: |
+          {
+            "advertise_addr": "{{ ansible_default_ipv4.address }}",
+            "node_name": "{{ Name }}",
+            "data_dir": "/opt/consul",
+            "datacenter": "opsschool",
+            "encrypt": "uDBV4e+LbFW3019YKPxIrg==",
+            "disable_remote_exec": true,
+            "disable_update_check": true,
+            "leave_on_terminate": true,
+            "retry_join": ["provider=aws tag_key=Consul tag_value=server"],
+            "enable_script_checks": true,
+            "server": false
+          }
+
+    - name: Configure Consul service
+      copy:
+        dest: "/etc/systemd/system/consul.service"
+        content: |
+          [Unit]
+          Description=Consul service discovery agent
+          Requires=network-online.target
+          After=network.target
+
+          [Service]
+          User=consul
+          Group=consul
+          PIDFile=/run/consul/consul.pid
+          Restart=on-failure
+          Environment=GOMAXPROCS=2
+          ExecStart=/usr/local/bin/consul agent -pid-file=/run/consul/consul.pid -config-dir=/etc/consul.d
+          ExecReload=/bin/kill -s HUP $MAINPID
+          KillSignal=SIGINT
+          TimeoutStopSec=5
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd configuration
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable and start consul service
+      systemd:
+        name: consul.service
+        enabled: yes
+        state: started
+
+    - name: Check if Docker is installed
+      command: docker -v
+      register: docker_installed
+      failed_when: false
+      changed_when: false
+      ignore_errors: true
+
+    - name: Install Docker on Debian or Ubuntu
+      apt:
+        name: docker.io
+        state: present
+      when: docker_installed.rc != 0 and ansible_os_family in ['Debian', 'Ubuntu']
+
+    - name: Install Docker on Amazon or Redhat
+      yum:
+        name: docker
+        state: present
+      when: docker_installed.rc != 0 and ansible_os_family in ['RedHat', 'Amazon']
+
+    - name: Create 'docker' group
+      group:
+        name: docker
+        state: present
+      when: docker_installed.rc != 0
+
+    - name: Add current user to the 'docker' group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+      when: docker_installed.rc != 0
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+      when: docker_installed.rc != 0
+
+    - name: Start Registrator Container
+      docker_container:
+        name: consul_registrator
+        image: gliderlabs/registrator:latest
+        network_mode: host
+        volumes:
+          - /var/run/docker.sock:/tmp/docker.sock
+        command: consul://localhost:8500
+        state: started

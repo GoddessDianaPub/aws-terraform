@@ -1,0 +1,68 @@
+imageTag: 7.10.2
+daemonset:
+  secretMounts:
+  extraEnvs:
+  - name: ELASTICSEARCH_HOST
+    value: elasticsearch
+  - name: ELASTICSEARCH_PORT
+    value: "9200"
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
+  - name: ELASTICSEARCH_USERNAME
+    value: elastic
+  - name: ELASTICSEARCH_PASSWORD
+    value: password
+
+  filebeatConfig:
+    filebeat.yml: |
+      filebeat.inputs:
+      - type: container
+        paths:
+          - /var/log/containers/*.log
+      - type: log
+        enabled: false
+        paths:
+          - /var/log/auth.log
+      processors:
+        - add_kubernetes_metadata:
+            host: ${NODE_NAME}
+            matchers:
+            - logs_path:
+                logs_path: "/var/log/containers/"
+        - add_host_metadata:
+            when.not.contains.tags: forwarded
+                
+      filebeat.modules:
+        - module: system
+          syslog:
+            enabled: true
+          auth:
+            enabled: true
+        - module: postgresql
+          log:
+            enabled: true
+      filebeat.config.modules:
+        path: ${path.config}/modules.d/*.yml
+        reload.enabled: false
+      setup.kibana.host: "10.0.0.26:5601"
+      setup.dashboards.enabled: true
+      setup.template.name: "filebeat"
+      setup.template.pattern: "filebeat-*"
+      setup.template.settings:
+        index.number_of_shards: 1
+
+      output.elasticsearch:
+        host: "${NODE_NAME}"
+        hosts: '["http://${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]'
+        index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"
+        username: "${ELASTICSEARCH_USERNAME}"
+        password: "${ELASTICSEARCH_PASSWORD}"
+        protocol: http
+        ssl.verification_mode: none
+        ssl.certificate_authorities: []
+        
+managedServiceAccount: true
+serviceAccountAnnotations:
+  eks.amazonaws.com/role-arn: "arn:aws:iam::735911875499:role/opsschool-project-sa-filebeat"

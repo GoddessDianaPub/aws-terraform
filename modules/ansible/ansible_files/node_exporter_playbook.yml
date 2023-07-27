@@ -1,0 +1,9 @@
+---
+
+- name: install node-exporter
+  hosts: all
+  become: true
+  become_user: root  
+
+  roles:
+  - node-exporter
