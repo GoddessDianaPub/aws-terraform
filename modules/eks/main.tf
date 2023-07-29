@@ -192,27 +192,19 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
   }
 
   ingress {
-    description        = "Filebeat access"
-    from_port          = 5044
-    to_port            = 5044
-    protocol           = "TCP"
-    cidr_blocks        = [var.vpc_cidr_range]
+    description      = "Filebeat access"
+    from_port        = 5044
+    to_port          = 5044
+    protocol         = "TCP"
+    cidr_blocks      = [var.vpc_cidr_range]
   }
 
   ingress {
-    description        = "Kibana UI"
-    from_port          = 5601
-    to_port            = 5601
-    protocol           = "TCP"
-    cidr_blocks        = [var.vpc_cidr_range]
-  }
-
-  ingress {
-    description      = "Allow consul self access"
-    from_port        = 8300
-    to_port          = 8301
-    protocol         = "tcp"
-    cidr_blocks      = [var.vpc_cidr_range]   
+    description      = "Kibana UI"
+    from_port        = 5601
+    to_port          = 5601
+    protocol         = "TCP"
+    cidr_blocks      = [var.vpc_cidr_range]
   }
   
   ingress {
@@ -220,7 +212,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     from_port        = 3000
     to_port          = 3000
     protocol         = "tcp"
-    security_groups  = [var.alb_sg]
+    security_groups  = [var.vpc_cidr_range]
   }
 
   ingress {
@@ -228,7 +220,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     from_port        = 9090
     to_port          = 9090
     protocol         = "tcp"
-    security_groups  = [var.alb_sg] 
+    security_groups  = [var.vpc_cidr_range] 
   }
   
   egress {
