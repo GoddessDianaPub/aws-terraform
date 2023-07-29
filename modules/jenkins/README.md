@@ -4,7 +4,9 @@ Terraform module which creates jenkins resources
 
 ## Requirements
 
-### Plugins to install:
+###
+
+Plugins to install:
   - Credentials
   - SSH Credentials
   - AWS Credentials
@@ -17,7 +19,9 @@ Terraform module which creates jenkins resources
   - Blue Ocean
 
 
-### Update Jenkins credentials manager:
+###
+
+Update Jenkins credentials manager:
   - Create SSH Username with private key with the jenkins's server private key, ubuntu username and "agent.ubuntu" id
   - Create Secret text with "database_password" id, use the password you chose for your DB
   - Create Username with password for github with "github_token" id, use your github username and token
@@ -25,8 +29,9 @@ Terraform module which creates jenkins resources
   - Create GitHub App with "github.jenkins.app" id, use the github app token
   - Create AWS Credentials with "jenkins" id, use the aws access key created in the next step
 
+###
 
-### More steps to do:
+More steps to do:
 - Create nodes with private ip address on Jenkins > Manage Jenkins > Nodes > agents, and update the credentials id you    
   have created in the previous step, with the label "linux" and jenkins_home as "Remote root directory"
 - In aws create iam user "jenkins" with admin access, use it in jenkins credential manager
