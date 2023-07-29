@@ -118,7 +118,14 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     protocol         = "TCP"
     cidr_blocks      = [var.vpc_cidr_range]
   }
-
+  
+  ingress {
+    description      = "Allow ICMP access"
+    from_port        = 8
+    to_port          = 0
+    protocol         = "icmp"
+    cidr_blocks      = [var.vpc_cidr_range]   
+  }
  
   ingress {
     description      = "Allow consul self access"
@@ -169,11 +176,11 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
   }
 
   ingress {
-    description        = "Allow node_exporter access"
-    from_port          = 9100
-    to_port            = 9100
-    protocol           = "tcp"
-    cidr_blocks        = [var.vpc_cidr_range]   
+    description      = "Allow node_exporter access"
+    from_port        = 9100
+    to_port          = 9100
+    protocol         = "tcp"
+    cidr_blocks      = [var.vpc_cidr_range]   
   }
 
   ingress {
@@ -200,7 +207,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     cidr_blocks        = [var.vpc_cidr_range]
   }
 
-  egress {
+  ingress {
     description      = "Allow consul self access"
     from_port        = 8300
     to_port          = 8301
@@ -208,6 +215,21 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     cidr_blocks      = [var.vpc_cidr_range]   
   }
   
+  ingress {
+    description      = "Allow grafana UI access"
+    from_port        = 3000
+    to_port          = 3000
+    protocol         = "tcp"
+    security_groups  = [var.alb_sg]
+  }
+
+  ingress {
+    description      = "Allow prometheus UI access"
+    from_port        = 9090
+    to_port          = 9090
+    protocol         = "tcp"
+    security_groups  = [var.alb_sg] 
+  }
   
   egress {
     description      = "all trafic access"

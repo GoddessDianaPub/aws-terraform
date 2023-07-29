@@ -35,6 +35,8 @@ Terraform module which creates jenkins resources
 - Create a slack chanel named "jenkins-notifications" and integrate it with jenkins [you can follow this article](https://plugins.jenkins.io/slack/)
 - Create jenkins-notifications channel on slack
 - Install Jenkins CI app in slack and integrate it with this channel: jenkins-notifications
+- Go to Manage Jenkins > System > Slack and configure your channel configurations
+
 
 
 
