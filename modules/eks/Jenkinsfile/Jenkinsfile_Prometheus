@@ -25,7 +25,7 @@ pipeline {
     
     environment {
         AWS_DEFAULT_REGION    = "us-east-1"
-        REPO_URL              = "https://github.com/GoddessDianaPub/terraform-aws-all.git"
+        REPO_URL              = "https://github.com/GoddessDianaPub/aws-terraform.git"
         CLUSTER_NAME          = "opsschool-eks-SowNYaBY"
         JENKINS_AWS_CRED      = "jenkins"
     }
@@ -112,7 +112,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: "${env.JENKINS_AWS_CRED}", secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh 'kubectl apply -f ~/jenkins-agent/jenkins-agent/workspace/Deplyoing_prometheus_on_eks/modules/eks/manifests/monitoring-manifests/monitoring-ingress.yaml'
+                    sh 'kubectl apply -f modules/eks/manifests/monitoring-manifests/monitoring-ingress.yaml'
                     }
                 }
             }

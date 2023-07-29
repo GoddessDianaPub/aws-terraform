@@ -7,3 +7,6 @@ Add this after the mapGroups:
       groups:
       - system:masters
       username: jenkins
+
+
+kubectl describe cm aws-auth -n kube-system
