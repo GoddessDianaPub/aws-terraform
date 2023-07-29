@@ -42,7 +42,7 @@ ebs_size_ansible_server            = "10"
 
 #jenkins
 jenkins_server_instances_count     = 1
-#ami_jenkins_server                 = "ami-01ffe41193015d75c"
+#ami_jenkins_server                 = "ami-0cd1a6eb7829b141a"
 ami_jenkins_server                 = "ami-0261755bbcb8c4a84"
 instance_type_jenkins_server       = "t2.medium"
 ebs_type_jenkins_server            = "gp2"
