@@ -24,8 +24,8 @@ pipeline {
     
     environment {
         AWS_DEFAULT_REGION    = "us-east-1"
-        REPO_URL              = "https://github.com/GoddessDianaPub/kandula-app.git"
-        CLUSTER_NAME          = "opsschool-eks-UZSWMnnZ"
+        REPO_URL              = "https://github.com/GoddessDianaPub/terraform-aws-all.git"
+        CLUSTER_NAME          = "opsschool-eks-SowNYaBY"
     }
     
     stages {

@@ -25,8 +25,8 @@ pipeline {
     
     environment {
         AWS_DEFAULT_REGION    = "us-east-1"
-        REPO_URL              = "https://github.com/GoddessDianaPub/kandula-app.git"
-        CLUSTER_NAME          = "opsschool-eks-UZSWMnnZ"
+        REPO_URL              = "https://github.com/GoddessDianaPub/terraform-aws-all.git"
+        CLUSTER_NAME          = "opsschool-eks-SowNYaBY"
         JENKINS_AWS_CRED      = "jenkins"
     }
     
@@ -119,12 +119,12 @@ pipeline {
         }
 
     }    
-//    post {
-//        always {
-//            notifySlack(currentBuild.result)
-//            script {
-//                deleteDir() // built-in step to clean up the workspace
-//            }
-//        }
-//    }
+    post {
+        always {
+            notifySlack(currentBuild.result)
+            script {
+                deleteDir() // built-in step to clean up the workspace
+            }
+        }
+    }
 }

@@ -11,8 +11,6 @@ sudo ./aws/install
 sudo apt-get install docker.io git openjdk-11-jdk -y
 sudo service docker start
 sudo usermod -aG docker ubuntu
-sudo apt-get install awscli -y
-
 
 # Download and install kubectl
 sudo apt-get install -y apt-transport-https gnupg2 curl
