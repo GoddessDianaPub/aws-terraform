@@ -27,7 +27,7 @@ Terraform module which creates jenkins resources
   - Create AWS Credentials with "jenkins" id, use the aws access key created in the next step
 
 
-### More steps to do
+### More steps to do:
 - Create nodes with private ip address on Jenkins > Manage Jenkins > Nodes > agents, and update the credentials id you    
   have created in the previous step, with the label "linux" and jenkins_home as "Remote root directory"
 - In aws create iam user "jenkins" with admin access, use it in jenkins credential manager
