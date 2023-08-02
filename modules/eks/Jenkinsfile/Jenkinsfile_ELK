@@ -40,7 +40,7 @@ pipeline {
             steps {
 #                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: "${env.JENKINS_AWS_CRED}", secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                 sh "aws eks --region=${AWS_DEFAULT_REGION} update-kubeconfig --name ${CLUSTER_NAME}"
-                }
+#                }
             }
         }
             
