@@ -14,7 +14,7 @@ server:
 client:
   enabled: true
   exposeGossipPorts: true
-  retry_join:
+  join:
     - "provider=aws tag_key=Consul tag_value=server"
 #  nodeMeta:
 #    pod-name: ${HOSTNAME}
