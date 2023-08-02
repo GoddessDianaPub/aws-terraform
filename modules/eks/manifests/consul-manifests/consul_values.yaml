@@ -10,7 +10,7 @@ global:
 #  hosts: [consul-consul-dns.consul.svc]
 #  httpPort: 8500
 server:
-  replicas: 0
+  enabled: false
 client:
   enabled: true
   exposeGossipPorts: true
@@ -22,7 +22,7 @@ client:
 dns:
   enabled: true
 connectInject:
-  enabled: false
+  enabled: true
 
 syncCatalog:
   enabled: true

@@ -1,6 +1,6 @@
 kubectl get svc -n consul consul-consul-dns -o jsonpath={.spec.clusterIP}
 kubectl edit cm coredns -n kube-system
-
+kubectl describe cm coredns -n kube-system
 
 ---
 apiVersion: v1
