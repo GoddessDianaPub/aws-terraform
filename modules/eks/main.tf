@@ -212,7 +212,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     from_port        = 3000
     to_port          = 3000
     protocol         = "tcp"
-    security_groups  = [var.vpc_cidr_range]
+    cidr_blocks      = [var.vpc_cidr_range]
   }
 
   ingress {
@@ -220,7 +220,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     from_port        = 9090
     to_port          = 9090
     protocol         = "tcp"
-    security_groups  = [var.vpc_cidr_range] 
+    cidr_blocks      = [var.vpc_cidr_range] 
   }
   
   egress {
