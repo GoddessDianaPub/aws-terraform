@@ -16,13 +16,13 @@ client:
   exposeGossipPorts: true
   join:
     - "provider=aws tag_key=Consul tag_value=server"
-  nodeMeta:
-    pod-name: ${HOSTNAME}
-    host-ip: ${HOST_IP}
+#  nodeMeta:
+#    pod-name: ${HOSTNAME}
+#    host-ip: ${HOST_IP}
 dns:
   enabled: true
 connectInject:
-  enabled: true
+  enabled: false
 
 syncCatalog:
   enabled: true
