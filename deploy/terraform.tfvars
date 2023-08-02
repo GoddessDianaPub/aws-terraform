@@ -59,7 +59,8 @@ cidr_range_jenkins_agent           = "0.0.0.0/0"
 
 #consul
 consul_instances_count             = 3
-ami_consul_servers                 = "ami-053b0d53c279acc90"
+ami_consul_servers                 = "ami-0261755bbcb8c4a84"
+#ami_consul_servers                 = "ami-053b0d53c279acc90"
 instance_type_consul_servers       = "t2.small"
 consul_version                     = "1.15.2"
 key_name_consul                    = "opsschool-project"
