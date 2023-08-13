@@ -28,7 +28,7 @@ echo "  IdentityFile ~/.ssh/opsschool-project.pem" >> /etc/ssh/ssh_config
 
 # Create the .ssh directory and copy the SSH key file
 user="ec2-user"
-file="opsschool-project.pem"
+file="opsschool.pem"
 
 mkdir -p "/home/${user}/.ssh"
 touch "/home/${user}/.ssh/${file}"

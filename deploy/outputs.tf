@@ -41,9 +41,9 @@ output "workstation-external-ip" {
 
 
 #DB outputs
-#output "rds_private_endpoint" {
-#  value = module.rds.rds_private_endpoint
-#}
+output "rds_private_endpoint" {
+  value = module.rds.rds_private_endpoint
+}
 
 
 #ansible outputs

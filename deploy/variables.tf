@@ -33,11 +33,11 @@ variable "bastion_host_instances_count" {}
 #eks variables
 variable "eks_cidr_range" {}
 
+variable "eks_consul_cidr_range" {}
+
 variable "eks_version" {}
 
 variable "key_name_eks" {}
-
-variable "kube_config" {}
 
 
 #rds variables

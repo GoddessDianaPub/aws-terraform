@@ -126,6 +126,14 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     protocol         = "icmp"
     cidr_blocks      = [var.vpc_cidr_range]   
   }
+
+  ingress {
+    description      = "Allow consul service"
+    from_port        = 8500
+    to_port          = 8500
+    protocol         = "tcp"
+    cidr_blocks      = [var.eks_consul_cidr_range]   
+  }
  
   ingress {
     description      = "Allow consul self access"

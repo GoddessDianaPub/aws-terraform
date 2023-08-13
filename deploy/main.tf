@@ -44,8 +44,8 @@ module "eks" {
   source                                 = "../modules/eks"
   vpc_id                                 = module.vpc.vpc_id
   vpc_cidr_range                         = var.vpc_cidr_range
+  eks_consul_cidr_range                  = var.eks_consul_cidr_range
   private_subnet_id                      = module.vpc.private_subnet_id
-  kube_config                            = var.kube_config
   eks_version                            = var.eks_version
   subnet_ids                             = var.public_subnet_cidr_range
   key_name_eks                           = var.key_name_eks 
@@ -57,17 +57,17 @@ module "eks" {
 
 
 # Create rds instances for DB
-#module "rds" {
-#  source                                 = "../modules/rds"
-#  vpc_id                                 = module.vpc.vpc_id
-#  rds_instances_count                    = var.rds_instances_count
-#  private_subnet_id                      = module.vpc.private_subnet_id
-#  vpc_cidr_range                         = var.vpc_cidr_range
-#  logging_sg                             = module.logging.logging_sg
-#  anyware_cidr_range                     = var.anyware_cidr_range
-#  availability_zones_names               = module.vpc.availability_zones_names
-#  bastion_ssh_from_security_group_id     = module.bastion.bastion_ssh_from_security_group_id
-#}
+module "rds" {
+  source                                 = "../modules/rds"
+  vpc_id                                 = module.vpc.vpc_id
+  rds_instances_count                    = var.rds_instances_count
+  private_subnet_id                      = module.vpc.private_subnet_id
+  vpc_cidr_range                         = var.vpc_cidr_range
+  logging_sg                             = module.logging.logging_sg
+  anyware_cidr_range                     = var.anyware_cidr_range
+  availability_zones_names               = module.vpc.availability_zones_names
+  bastion_ssh_from_security_group_id     = module.bastion.bastion_ssh_from_security_group_id
+}
 
 
 #Create ansible servers and nodes
