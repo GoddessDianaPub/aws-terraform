@@ -1,17 +1,20 @@
 #!/bin/bash
 
 # Install necessary packages
-yum update -y
-yum install -y gcc openssl-devel libffi-devel python3 python3-devel
+sudo yum update -y
+sudo yum install -y gcc openssl-devel libffi-devel python3 python3-devel
 
 # Install EC2 Instance Connect
-yum install -y ec2-instance-connect
+sudo yum install -y ec2-instance-connect
 
-# Install AWS CLI
-pip3 install awscli --upgrade
-
+# Install AWS CLI version 2
+sudo yum install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+ 
 # Install SSH server
-yum install -y openssh-server
+sudo yum install -y openssh-server
 
 # Configure SSH server
 # Denies root login

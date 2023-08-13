@@ -28,4 +28,4 @@ groups:
   centos: "'centos' in tags.OSType"
   debian: "'debian' in tags.OSType"
 
-aws_iam_role: arn:aws:iam::735911875499:role/EC2_permissions_for_ansible_server
+aws_iam_role: arn:aws:iam::yyy:role/EC2_permissions_for_ansible_server
