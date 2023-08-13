@@ -16,7 +16,7 @@ EOF
 
 systemctl restart systemd-resolved.service
 
-consul_version="1.14.0"
+consul_version="1.15.2"
 
 echo "Fetching Consul..."
 cd /tmp
