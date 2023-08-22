@@ -11,7 +11,7 @@ metadata:
   name: filebeat-sa
   namespace: filebeat
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::735911875499:role/opsschool-project-sa-filebeat" 
+    eks.amazonaws.com/role-arn: "arn:aws:iam::<your-account-id>:role/opsschool-project-sa-filebeat" 
 
 ---
 
@@ -27,26 +27,3 @@ spec:
     port: 80
     targetPort: 5601
 
-#---
-
-#apiVersion: networking.k8s.io/v1
-#kind: Ingress
-#metadata:
-#  name: filebeat-nginx
-#  namespace: filebeat
-#  annotations:
-#    kubernetes.io/ingress.class: nginx
-#    nginx.ingress.kubernetes.io/enable-external-authorization: "false"
-#    nginx.ingress.kubernetes.io/rewrite-target: /
-#spec:
-#  rules:
-#    - host: filebeateks.dianatop.lat
-#      http:
-#        paths:
-#          - path: "/"
-#            pathType: Prefix
-#            backend:
-#              service:
-#                name: filebeat
-#                port:
-#                  number: 5601
