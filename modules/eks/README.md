@@ -4,7 +4,7 @@ Terraform module which creates EKS resources
 
 ## Requirements
 
-- In order to grant admin cluster permissions to jenkins user, you need to add the "mapUsers" section (see details in aws_aut_conf.yaml file)
+- In order to grant admin cluster permissions to jenkins user, you need to add the "mapUsers" section (see details in scripts/aws_aut_conf.yaml file)
 - Update the cluster name in this variable: CLUSTER_NAME, for all Jenkinsfiles
 - Update the coredns configmap with the consul service ip address (see details in consul_cm.yaml file)
 - Ingress with private NLB: follow this article for [instructions](https://kubernetes.github.io/ingress-nginx/deploy/#aws):
