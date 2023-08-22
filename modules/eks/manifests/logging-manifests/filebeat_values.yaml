@@ -65,4 +65,4 @@ daemonset:
         
 managedServiceAccount: true
 serviceAccountAnnotations:
-  eks.amazonaws.com/role-arn: "arn:aws:iam::<your-account-id>:role/opsschool-project-sa-filebeat"
+  eks.amazonaws.com/role-arn: "arn:aws:iam::735911875499:role/opsschool-project-sa-filebeat"
