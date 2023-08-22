@@ -130,7 +130,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
   ingress {
     description      = "Allow consul service"
     from_port        = 8500
-    to_port          = 8500
+    to_port          = 8502
     protocol         = "tcp"
     cidr_blocks      = [var.eks_consul_cidr_range]   
   }
