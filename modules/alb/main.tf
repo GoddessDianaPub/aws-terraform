@@ -175,7 +175,7 @@ resource "aws_lb_listener_rule" "consul" {
 
   condition {
     host_header {
-      values = ["local.consul_listener"]
+      values = [local.consul_listener]
     }
   }
 }
@@ -192,7 +192,7 @@ resource "aws_lb_listener_rule" "jenkins" {
 
   condition {
     host_header {
-      values = ["local.jenkins_listener"]
+      values = [local.jenkins_listener]
     }
   }
 }
@@ -209,7 +209,7 @@ resource "aws_lb_listener_rule" "logging" {
 
   condition {
     host_header {
-      values = ["local.kibana_listener"]
+      values = [local.kibana_listener]
     }
   }
 }
