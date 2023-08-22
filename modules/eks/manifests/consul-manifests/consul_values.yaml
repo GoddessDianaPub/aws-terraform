@@ -1,15 +1,15 @@
 global:
   enabled: false
-#  image: "hashicorp/consul:1.15.2"
+  image: "hashicorp/consul:1.15.2"
   datacenter: opsschool
-#  gossipEncryption:
-#    secretName: consul-gossip-encryption-key
-#    secretKey: key
-#client:
-#  enabled: true
-#  exposeGossipPorts: true
-#  retry_join:
-#    - "provider=aws tag_key=Consul tag_value=server"
+  gossipEncryption:
+    secretName: consul-gossip-encryption-key
+    secretKey: key
+client:
+  enabled: true
+  exposeGossipPorts: true
+  retry_join:
+    - "provider=aws tag_key=Consul tag_value=server"
     
 externalServers:
   enabled: true
