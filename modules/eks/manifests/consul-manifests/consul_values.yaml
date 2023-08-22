@@ -5,7 +5,8 @@ global:
   gossipEncryption:
     secretName: consul-gossip-encryption-key
     secretKey: key
-
+client:
+  enabled: true
   retry_join:
     - "provider=aws tag_key=Consul tag_value=server"
     
@@ -20,3 +21,6 @@ dns:
 
 syncCatalog:
   enabled: true
+
+connectInject:
+  enabled: false
