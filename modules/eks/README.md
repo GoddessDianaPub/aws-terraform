@@ -21,6 +21,7 @@ Terraform module which creates EKS resources
 - To test if the environemet is up, run the following command: kubectl get nodes -o wide
 - Update the repo name in this variable: REPO_URL, for all Jenkinsfiles if you choose to use a different repo)
 - To access grafana UI use these credentials: username: admin password: prom-operator
+- To get the consul secret info: kubectl get secret consul-gossip-encryption-key -n consul -o jsonpath='{.data.key}' | base64 --decode
 
 
 

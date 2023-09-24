@@ -1,7 +1,7 @@
 global:
   enabled: false
   image: "hashicorp/consul:1.15.2"
-  datacenter: opsschool
+  datacenter: "opsschool"
   gossipEncryption:
     secretName: consul-gossip-encryption-key
     secretKey: key
