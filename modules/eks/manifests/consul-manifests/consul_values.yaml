@@ -2,40 +2,12 @@ global:
   enabled: false
   image: "hashicorp/consul:1.15.2"
   datacenter: opsschool
-<<<<<<< HEAD
-#  advertise_addr: "$PRIVATE_IP"
-  gossipEncryption:
-    secretName: consul-gossip-encryption-key
-    secretKey: key
-externalServers:
-=======
   gossipEncryption:
     secretName: consul-gossip-encryption-key
     secretKey: key
 client:
->>>>>>> c6a3e08f36ddd465fc6d02c8807e20c5ed830db6
   enabled: true
-  hosts: [consul-consul-dns.consul.svc]
-  httpPort: 8500
-#server:
-#  enabled: false
-#client:
-#  enabled: true
   exposeGossipPorts: true
-<<<<<<< HEAD
-#  leave_on_terminate: true
-#  disable_update_check: true
-#  disable_remote_exec: true
-  retry_join:
-    - "provider=aws tag_key=Consul tag_value=server"
-#  nodeMeta:
-#    pod-name: ${HOSTNAME}
-#    host-ip: ${HOST_IP}
-dns:
-  enabled: true
-#connectInject:
-#  enabled: false
-=======
   retry_join:
     - "provider=aws tag_key=Consul tag_value=server"
     
@@ -46,7 +18,6 @@ externalServers:
 
 dns:
   enabled: true
->>>>>>> c6a3e08f36ddd465fc6d02c8807e20c5ed830db6
 
 syncCatalog:
   enabled: true

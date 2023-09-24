@@ -1,6 +1,5 @@
 
 locals {
-  #jenkins_default_name       = "opsschool-project-jenkins"
   module_path                = "${replace(path.module, "\\", "/")}"
   workstation-external-cidr  = "${chomp(data.http.workstation-external-ip.response_body)}/32"
   consul_datacenter          = "opsschool"
