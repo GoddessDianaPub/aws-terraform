@@ -5,6 +5,7 @@ Terraform module which creates ansible server resources
 ## Requirements
 
 - Add the ssh private key to ansible server, in order to manage the other instances via ssh
+- Configure your aws credentials with "aws configure" command
 - Open port 22 to access all the instances in your VPC
 - Tag the instances you want to install the roles on:
   - consul service with tags: Consul: agent

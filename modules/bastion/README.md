@@ -2,6 +2,11 @@
 
 Terraform module which creates bastion resources.
 
+
+## Requirements
+
+- Make sure to save your private key content (.pem) to this file: "/home/${user}/.ssh/${file}"
+
 ## Notes
 
 - In order to seperate the ssh connections, there are 2 security groups:

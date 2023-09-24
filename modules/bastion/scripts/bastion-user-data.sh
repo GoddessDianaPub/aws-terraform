@@ -12,7 +12,11 @@ sudo yum install unzip -y
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 unzip awscliv2.zip
 sudo ./aws/install
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> c6a3e08f36ddd465fc6d02c8807e20c5ed830db6
 # Install SSH server
 sudo yum install -y openssh-server
 
@@ -30,7 +34,7 @@ echo "  IdentityFile ~/.ssh/opsschool-project.pem" >> /etc/ssh/ssh_config
 
 # Create the .ssh directory and copy the SSH key file
 user="ec2-user"
-file="opsschool-project.pem"
+file="opsschool.pem"
 
 mkdir -p "/home/${user}/.ssh"
 touch "/home/${user}/.ssh/${file}"

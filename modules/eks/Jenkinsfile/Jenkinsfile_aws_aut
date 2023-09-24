@@ -25,7 +25,7 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION    = "us-east-1"
         REPO_URL              = "https://github.com/GoddessDianaPub/aws-terraform.git"
-        CLUSTER_NAME          = "opsschool-eks-SowNYaBY"
+        CLUSTER_NAME          = "opsschool-eks-xQfhEqIN"
     }
     
     stages {

@@ -3,7 +3,7 @@ kubectl edit cm aws-auth -n kube-system
 Add this after the mapGroups:
 
   mapUsers: |
-    - userarn: arn:aws:iam::735911875499:user/jenkins
+    - userarn: arn:aws:iam::<your-account-id>:user/jenkins
       groups:
       - system:masters
       username: jenkins

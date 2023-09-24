@@ -14,5 +14,5 @@ Terraform module which creates my AWS + EKS environment resources
 
 ## Notes
 
-- There are README files in each module that explains about each module
-- 
+- There is README file in each module that explains about each module
+- I trying to make my project better all the time, so i am constantly updating this repo

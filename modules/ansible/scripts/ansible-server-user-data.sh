@@ -16,10 +16,10 @@ sudo ./aws/install
 # Adds all the hosts, disables host key checking
 echo "Host *" >> /etc/ssh/ssh_config
 echo "  StrictHostKeyChecking no" >> /etc/ssh/ssh_config
-echo "  IdentityFile ~/.ssh/opsschool-project.pem" >> /etc/ssh/ssh_config
+echo "  IdentityFile ~/.ssh/opsschool.pem" >> /etc/ssh/ssh_config
 
 # Create the .ssh directory
-file="opsschool-project.pem"
+file="opsschool.pem"
 user="ubuntu"
 mkdir -p "/home/${user}/.ssh"
 touch "/home/${user}/.ssh/${file}"

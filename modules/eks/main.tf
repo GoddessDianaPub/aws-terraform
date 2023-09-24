@@ -134,6 +134,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     protocol         = "tcp"
     cidr_blocks      = [var.eks_consul_cidr_range]   
   }
+<<<<<<< HEAD
 
   ingress {
     description      = "Allow consul service"
@@ -142,6 +143,8 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
     protocol         = "tcp"
     cidr_blocks      = [var.eks_consul_cidr_range]   
   }
+=======
+>>>>>>> c6a3e08f36ddd465fc6d02c8807e20c5ed830db6
  
   ingress {
     description      = "Allow consul self access"

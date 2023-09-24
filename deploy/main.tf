@@ -57,17 +57,17 @@ module "eks" {
 
 
 # Create rds instances for DB
-#module "rds" {
-#  source                                 = "../modules/rds"
-#  vpc_id                                 = module.vpc.vpc_id
-#  rds_instances_count                    = var.rds_instances_count
-#  private_subnet_id                      = module.vpc.private_subnet_id
-#  vpc_cidr_range                         = var.vpc_cidr_range
-#  logging_sg                             = module.logging.logging_sg
-#  anyware_cidr_range                     = var.anyware_cidr_range
-#  availability_zones_names               = module.vpc.availability_zones_names
-#  bastion_ssh_from_security_group_id     = module.bastion.bastion_ssh_from_security_group_id
-#}
+module "rds" {
+  source                                 = "../modules/rds"
+  vpc_id                                 = module.vpc.vpc_id
+  rds_instances_count                    = var.rds_instances_count
+  private_subnet_id                      = module.vpc.private_subnet_id
+  vpc_cidr_range                         = var.vpc_cidr_range
+  logging_sg                             = module.logging.logging_sg
+  anyware_cidr_range                     = var.anyware_cidr_range
+  availability_zones_names               = module.vpc.availability_zones_names
+  bastion_ssh_from_security_group_id     = module.bastion.bastion_ssh_from_security_group_id
+}
 
 
 #Create ansible servers and nodes

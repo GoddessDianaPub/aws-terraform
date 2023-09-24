@@ -22,7 +22,11 @@ bastion_cidr_range                 = "0.0.0.0/0"
 eks_version                        = "1.26"
 eks_cidr_range                     = "0.0.0.0/0"
 eks_consul_cidr_range              = "172.20.0.0/16"
+<<<<<<< HEAD
 key_name_eks                       = "opsschool-project"
+=======
+key_name_eks                       = "opsschool"
+>>>>>>> c6a3e08f36ddd465fc6d02c8807e20c5ed830db6
 
 
 #rds
