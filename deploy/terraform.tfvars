@@ -5,7 +5,7 @@ private_subnet_cidr_range          = ["10.0.0.0/24", "10.0.1.0/24"]
 private_data_subnet_cidr_range     = ["10.0.2.0/24"]
 public_subnet_cidr_range           = ["10.0.3.0/24", "10.0.4.0/24"]
 anyware_cidr_range                 = "0.0.0.0/0"
-cert_arn                           = "arn:aws:acm:us-east-1:735911875499:certificate/xx"
+cert_arn                           = "arn:aws:acm:us-east-1:yyy:certificate/xx"
 
 
 #bastion
