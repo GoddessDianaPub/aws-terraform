@@ -1,8 +1,17 @@
-#For windows files
+
 locals {
+  #jenkins_default_name       = "opsschool-project-jenkins"
   module_path                = "${replace(path.module, "\\", "/")}"
-  jenkins_default_name       = "opsschool-project-jenkins"
   workstation-external-cidr  = "${chomp(data.http.workstation-external-ip.response_body)}/32"
+  consul_datacenter          = "opsschool"
+  consul_listener            = "consul.dianatop.lat"
+  jenkins_listener           = "jenkins.dianatop.lat"
+  kibana_listener            = "kibana.dianatop.lat"
+  grafana_record             = "grafana.dianatop.lat"
+  prometheus_record          = "prometheus.dianatop.lat"
+  kandula_record             = "kandula.dianatop.lat"
+  openvpn_record             = "openvpn.dianatop.lat"
+  private_zone_domain        = "dianatop.lat."
 }
 
 
@@ -167,7 +176,7 @@ resource "aws_lb_listener_rule" "consul" {
 
   condition {
     host_header {
-      values = ["consul.dianatop.lat"]
+      values = [local.consul_listener]
     }
   }
 }
@@ -184,7 +193,7 @@ resource "aws_lb_listener_rule" "jenkins" {
 
   condition {
     host_header {
-      values = ["jenkins.dianatop.lat"]
+      values = [local.jenkins_listener]
     }
   }
 }
@@ -201,7 +210,7 @@ resource "aws_lb_listener_rule" "logging" {
 
   condition {
     host_header {
-      values = ["kibana.dianatop.lat"]
+      values = [local.kibana_listener]
     }
   }
 }
@@ -263,7 +272,7 @@ resource "aws_lb_target_group" "consul_target_group" {
 
   health_check {
     enabled             = true
-    path                = "/ui/opsschool"
+    path                = "/ui/${local.consul_datacenter}"
     protocol            = "HTTP"
     interval            = 10
     timeout             = 5
@@ -345,14 +354,14 @@ resource "aws_lb_target_group_attachment" "attach_logging_instances" {
 
 # Retrieve existing Route 53 zone
 #data "aws_route53_zone" "hosted_zone" {
-#  name         = "dianatop.lat."
+#  name         = local.private_zone_domain
 #  private_zone = true
 #  vpc_id       = var.vpc_id
 #}
 
 
 resource "aws_route53_zone" "private_zone" {
-  name = "dianatop.lat."
+  name = local.private_zone_domain
 
   vpc {
     vpc_id     = var.vpc_id
@@ -363,19 +372,7 @@ resource "aws_route53_zone" "private_zone" {
 # Update Route 53 records for the subdomains
 resource "aws_route53_record" "consul_record" {
   zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "consul.dianatop.lat"
-  type      = "A"
-
-  alias {
-    name                   = aws_lb.application_load_balancer.dns_name
-    zone_id                = aws_lb.application_load_balancer.zone_id
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_route53_record" "grafana_record" {
-  zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "grafana.dianatop.lat"
+  name      = local.consul_listener
   type      = "A"
 
   alias {
@@ -387,7 +384,7 @@ resource "aws_route53_record" "grafana_record" {
 
 resource "aws_route53_record" "jenkins_record" {
   zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "jenkins.dianatop.lat"
+  name      = local.jenkins_listener
   type      = "A"
 
   alias {
@@ -399,7 +396,19 @@ resource "aws_route53_record" "jenkins_record" {
 
 resource "aws_route53_record" "kibana_record" {
   zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "kibana.dianatop.lat"
+  name      = local.kibana_listener
+  type      = "A"
+
+  alias {
+    name                   = aws_lb.application_load_balancer.dns_name
+    zone_id                = aws_lb.application_load_balancer.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "grafana_record" {
+  zone_id   = aws_route53_zone.private_zone.zone_id
+  name      = local.grafana_record
   type      = "A"
 
   alias {
@@ -411,7 +420,7 @@ resource "aws_route53_record" "kibana_record" {
 
 resource "aws_route53_record" "prometheus_record" {
   zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "prometheus.dianatop.lat"
+  name      = local.prometheus_record
   type      = "A"
 
   alias {
@@ -423,7 +432,7 @@ resource "aws_route53_record" "prometheus_record" {
 
 resource "aws_route53_record" "kandula_record" {
   zone_id   = aws_route53_zone.private_zone.zone_id
-  name      = "kandula.dianatop.lat"
+  name      = local.kandula_record
   type      = "A"
 
   alias {
@@ -435,7 +444,7 @@ resource "aws_route53_record" "kandula_record" {
 
 resource "aws_route53_record" "openvpn_record" {
   zone_id = aws_route53_zone.private_zone.zone_id
-  name    = "openvpn.dianatop.lat"
+  name    = local.openvpn_record
   type    = "A"
 
   records = [var.eip_openvpn]

@@ -20,17 +20,6 @@ spec:
                 port:
                   number: 3000
 
-    - host: grafana.dianatop.lat
-      http:
-        paths:
-          - path: "/login"
-            pathType: Prefix
-            backend:
-              service:
-                name: prometheus-grafana
-                port:
-                  number: 3000
-
     - host: prometheus.dianatop.lat
       http:
         paths:
@@ -42,13 +31,3 @@ spec:
                 port:
                   number: 9090
 
-    - host: prometheus.dianatop.lat
-      http:
-        paths:
-          - path: "/graph"
-            pathType: Prefix
-            backend:
-              service:
-                name: prometheus-kube-prometheus-prometheus
-                port:
-                  number: 9090

@@ -1,7 +1,5 @@
 variable "cluster_name" {}
 
-variable "kube_config" {}
-
 variable "vpc_id" {}
 
 variable "vpc_cidr_range" {}
@@ -9,6 +7,8 @@ variable "vpc_cidr_range" {}
 variable "key_name_eks" {}
 
 variable "eks_cidr_range" {}
+
+variable "eks_consul_cidr_range" {}
 
 variable "subnet_ids" {}
 

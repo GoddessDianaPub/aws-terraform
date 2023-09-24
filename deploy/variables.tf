@@ -37,7 +37,7 @@ variable "eks_version" {}
 
 variable "key_name_eks" {}
 
-variable "kube_config" {}
+variable "eks_consul_cidr_range" {}
 
 
 #rds variables

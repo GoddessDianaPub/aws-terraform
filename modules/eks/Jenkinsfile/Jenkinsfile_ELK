@@ -85,7 +85,9 @@ pipeline {
             steps {
                 script {
                     try {
+                        withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: "${env.JENKINS_AWS_CRED}", secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh 'helm install filebeat elastic/filebeat -f modules/eks/manifests/logging-manifests/filebeat_values.yaml --namespace filebeat'
+                        }
                     } catch (Exception e) {
                         echo "Consul Helm chart is already installed in the 'consul' namespace. Skipping installation."
                     }

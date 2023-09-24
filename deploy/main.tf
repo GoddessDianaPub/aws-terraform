@@ -44,8 +44,8 @@ module "eks" {
   source                                 = "../modules/eks"
   vpc_id                                 = module.vpc.vpc_id
   vpc_cidr_range                         = var.vpc_cidr_range
+  eks_consul_cidr_range                  = var.eks_consul_cidr_range
   private_subnet_id                      = module.vpc.private_subnet_id
-  kube_config                            = var.kube_config
   eks_version                            = var.eks_version
   subnet_ids                             = var.public_subnet_cidr_range
   key_name_eks                           = var.key_name_eks 
