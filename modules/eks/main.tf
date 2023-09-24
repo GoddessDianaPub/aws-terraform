@@ -248,7 +248,7 @@ resource "aws_security_group" "all_worker_mgmt_sg" {
  }
   
   tags   = {
-    Name = "opsschool-project-worker-nodes-sg"
+    Name = "opsschool-project-nodes-sg"
   }
 }
   

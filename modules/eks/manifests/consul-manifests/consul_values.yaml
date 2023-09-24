@@ -20,7 +20,7 @@ dns:
   enabled: true
 
 syncCatalog:
-  enabled: true
+  enabled: false
 
 connectInject:
   enabled: false
